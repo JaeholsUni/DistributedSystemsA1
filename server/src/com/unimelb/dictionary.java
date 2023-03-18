@@ -53,20 +53,27 @@ public class dictionary {
             try {
                 String [] nextLine;
                 while((nextLine = readIn.readNext()) != null) {
+                    System.out.println("New Dictionary line: " + nextLine[0] + " " + nextLine[1]);
                     dictionaryData.put(nextLine[0], nextLine[1]);
                 }
             } catch (IOException e) {
+                System.out.println("IOEXCEPTION");
                 e.printStackTrace();
             } catch (CsvValidationException e) {
+                System.out.println("CSV Validation Exception");
                 e.printStackTrace();
             }
         } catch (FileNotFoundException e){
+            System.out.println("File Not Found Exception");
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("other exception");
             e.printStackTrace();
         }
 
     }
 
-    public static final Function<String[], Boolean> TWO_COLUMN_ROW = (x) -> x.length ==3;
+    public static final Function<String[], Boolean> TWO_COLUMN_ROW = (x) -> x.length ==2;
     private static final RowValidator TWO_COLUMN_ROW_VALIDATOR = new RowFunctionValidator(TWO_COLUMN_ROW, "Row must have two columns");
 
 }
