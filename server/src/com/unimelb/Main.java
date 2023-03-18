@@ -9,11 +9,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
+
 public class Main {
 
     public static void main(String[] args) {
 	ServerSocket listeningSocket = null;
     Socket clientSocket = null;
+    dictionary dictionaryDatabase = new dictionary(args[0]);
+    JSONinterpretor interpretor = new JSONinterpretor();
+    worker tempWorker = new worker();
+    dictionaryDatabase.initializeDictionary();
 
     try {
         listeningSocket = new ServerSocket(4444);
@@ -40,8 +45,12 @@ public class Main {
                 {
                     System.out.println("Message from client " + i + ": " + clientMsg);
                     out.write("Server Ack " + clientMsg + "\n");
+                    String[] messageArray = interpretor.decodeJSON(clientMsg);
                     out.flush();
                     System.out.println("Response Sent");
+
+                    System.out.println(tempWorker.sortTask(dictionaryDatabase, messageArray));
+
                 }
                 System.out.println("Sever Closed the Client Connection - Recieved null");
             }
