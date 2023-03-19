@@ -4,7 +4,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class ThreadPool {
     private final int threadNumber;
-    private final ThreadWorker[] threads; //Worry about this later
+    private final ThreadWorker[] threads;
     private final LinkedBlockingQueue<Runnable> queue;
 
     public ThreadPool(int threadNumber) {
@@ -13,7 +13,7 @@ public class ThreadPool {
         threads = new ThreadWorker[threadNumber];
 
         for (int i = 0; i < threadNumber; i++) {
-            threads[i] = new ThreadWorker(queue); //worry abt this in a minute
+            threads[i] = new ThreadWorker(queue);
             threads[i].start();
         }
     }

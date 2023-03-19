@@ -12,7 +12,15 @@ import com.opencsv.exceptions.CsvValidationException;
 import com.opencsv.validators.RowFunctionValidator;
 import com.opencsv.validators.RowValidator;
 
+import static com.unimelb.arrayUtils.*;
+
 public class dictionary {
+    private static final String WORD_ALREADY_PRESENT = "Word already present in dictionary";
+    private static final String WORD_ADDED_CORRECTLY = "Word has been added to dictionary";
+    private static final String WORD_NOT_FOUND = "Word not found in dictionary";
+    private static final String WORD_REMOVED_CORRECTLY = "Word as been removed from dictionary";
+    private static final String WORD_UPDATED_CORRECTLY = "Word has been updated correctly";
+
     private Map<String, String> dictionaryData;
     private String dictionaryFile;
 
@@ -21,39 +29,39 @@ public class dictionary {
         this.dictionaryData = new ConcurrentHashMap<>(); //future proofing
     }
 
-    public String addNewEntry(String newWord, String definitions){
+    public String[] addNewEntry(String newWord, String definitions){
         if (dictionaryData.containsKey(newWord)){
-            return "Already here";
+            return tupleMaker(FAILURE_MESSAGE, WORD_ALREADY_PRESENT);
         } else {
             dictionaryData.put(newWord, definitions);
-            return "success";
+            return tupleMaker(SUCCESS_MESSAGE, WORD_ADDED_CORRECTLY);
         }
     }
 
-    public String removeEntry(String word){
+    public String[] removeEntry(String word){
         if (!dictionaryData.containsKey(word)){
-            return "not here";
+            return tupleMaker(FAILURE_MESSAGE, WORD_NOT_FOUND);
         } else {
             dictionaryData.remove(word);
-            return "success";
+            return tupleMaker(SUCCESS_MESSAGE, WORD_REMOVED_CORRECTLY);
         }
     }
 
-    public String retrieveEntry(String word){
+    public String[] retrieveEntry(String word){
         if (!dictionaryData.containsKey(word)){
-            return "not found";
+            return tupleMaker(FAILURE_MESSAGE, WORD_NOT_FOUND);
         } else {
-            return dictionaryData.get(word);
+            return tupleMaker(SUCCESS_MESSAGE, dictionaryData.get(word));
         }
     }
 
-    public String updateEntry(String word, String definitions) {
+    public String[] updateEntry(String word, String definitions) {
         if (dictionaryData.containsKey(word)){
             dictionaryData.remove(word);
             dictionaryData.put(word, definitions);
-            return "success";
+            return tupleMaker(SUCCESS_MESSAGE, WORD_UPDATED_CORRECTLY);
         } else {
-            return "Word doesn't exist";
+            return tupleMaker(FAILURE_MESSAGE, WORD_NOT_FOUND);
         }
     }
 
@@ -80,7 +88,6 @@ public class dictionary {
             System.out.println("other exception");
             e.printStackTrace();
         }
-
     }
 
     public static final Function<String[], Boolean> TWO_COLUMN_ROW = (x) -> x.length ==2;

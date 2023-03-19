@@ -3,6 +3,9 @@ package com.unimelb;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
+
+import static com.unimelb.arrayUtils.*;
 
 public class clientRunnable implements Runnable{
 
@@ -27,12 +30,17 @@ public class clientRunnable implements Runnable{
             try {
                 while ((clientMsg = in.readLine()) != null)
                 {
-                    out.write("Server Ack " + clientMsg + "\n");
                     String[] messageArray = interpretor.decodeJSON(clientMsg);
-                    out.flush();
-                    System.out.println("Response Sent");
 
-                    System.out.println(sortTask(dictionary, messageArray));
+                    if (messageArray == null) {
+                        System.out.println("bad input");
+                        continue;
+                    }
+                    String output = interpretor.encodeJSON(sortTask(dictionary, messageArray));
+                    System.out.println(output);
+                    out.write(output + "\n");
+                    out.flush();
+                    System.out.println("response sent");
 
                 }
             } catch (SocketException e)
@@ -48,22 +56,23 @@ public class clientRunnable implements Runnable{
 
     }
 
-    private String sortTask(dictionary dictionary, String[] contents){
+    private ArrayList<String> sortTask(dictionary dictionary, String[] contents){
+
         if (!contentValidator(contents)) {
-            return "Failure";
+            return arrayComposer(tupleMaker(FAILURE_MESSAGE, INVALID_CONTENT_MESSAGE));
         }
 
         switch (contents[0]) {
             case "get":
-                return (dictionary.retrieveEntry(contents[1]));
+                return arrayComposer(dictionary.retrieveEntry(contents[1]));
             case "delete":
-                return dictionary.removeEntry(contents[1]);
+                return arrayComposer(dictionary.removeEntry(contents[1]));
             case "add":
-                return dictionary.addNewEntry(contents[1], contents[2]);
+                return arrayComposer(dictionary.addNewEntry(contents[1], contents[2]));
             case "update":
-                return dictionary.updateEntry(contents[1], contents[2]);
+                return arrayComposer(dictionary.updateEntry(contents[1], contents[2]));
             default:
-                return "Failure";
+                return arrayComposer(tupleMaker(FAILURE_MESSAGE, UNKNOWN_COMMAND_MESSAGE));
         }
     }
 
@@ -73,11 +82,9 @@ public class clientRunnable implements Runnable{
             return false;
         } else {
             if ((contents[0].equals("add") || contents[0].equals("update")) && contents[2] == null) {
-
                 System.out.println("3 null and required");
                 return false;
             }
-
             System.out.println("all g");
             return true;
         }
