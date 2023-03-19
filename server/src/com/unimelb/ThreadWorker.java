@@ -14,8 +14,6 @@ public class ThreadWorker extends Thread {
         Runnable task;
 
         while (true) {
-
-
                 try {
                     task = queue.take();
                     task.run();
