@@ -14,23 +14,15 @@ public class ThreadWorker extends Thread {
         Runnable task;
 
         while (true) {
-            synchronized (queue) {
-                while (queue.isEmpty()) {
-                    try {
-                        queue.wait();
-                    } catch (InterruptedException e) {
-                        System.out.println("Interrupted Exception");
-                    }
-                }
 
-                task = queue.poll();
 
                 try {
+                    task = queue.take();
                     task.run();
-                } catch (RuntimeException e) {
-                    System.out.println("Runtime Exception");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            }
+
         }
     }
 }

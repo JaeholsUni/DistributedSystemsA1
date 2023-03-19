@@ -31,6 +31,7 @@ public class Main {
             clientSocket = listeningSocket.accept();
             i++;
 
+            System.out.println("Assigning client number " + i + "To new thread");
             threadPool.addTask(new clientRunnable(dictionaryDatabase, clientSocket));
 
             System.out.println("Client connection number" + i + "accepted:");

@@ -16,6 +16,8 @@ public class clientRunnable implements Runnable{
     }
 
     public void run() {
+
+
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(connectionSocket.getOutputStream()));

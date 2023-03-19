@@ -19,11 +19,8 @@ public class ThreadPool {
     }
 
     public void addTask(Runnable task) {
-        synchronized (queue) {
+
             queue.add(task);
-            queue.notify();
-        }
+
     }
-
-
 }
