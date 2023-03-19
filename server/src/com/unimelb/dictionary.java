@@ -88,7 +88,6 @@ public class dictionary {
             System.out.println("other exception");
             e.printStackTrace();
         }
-
     }
 
     public static final Function<String[], Boolean> TWO_COLUMN_ROW = (x) -> x.length ==2;

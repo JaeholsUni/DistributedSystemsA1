@@ -57,7 +57,6 @@ public class clientRunnable implements Runnable{
     }
 
     private ArrayList<String> sortTask(dictionary dictionary, String[] contents){
-        ArrayList<String> returnString = new ArrayList<>();
 
         if (!contentValidator(contents)) {
             return arrayComposer(tupleMaker(FAILURE_MESSAGE, INVALID_CONTENT_MESSAGE));

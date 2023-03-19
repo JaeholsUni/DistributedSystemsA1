@@ -1,23 +1,19 @@
 package com.unimelb;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 
 
 public class Main {
 
+    public static final Integer THREAD_NUMBER = 10;
+
     public static void main(String[] args) {
 	ServerSocket listeningSocket = null;
     Socket clientSocket = null;
-    ThreadPool threadPool = new ThreadPool(10);
+    ThreadPool threadPool = new ThreadPool(THREAD_NUMBER);
     dictionary dictionaryDatabase = new dictionary(args[0]);
-    JSONinterpretor interpretor = new JSONinterpretor();
     dictionaryDatabase.initializeDictionary();
 
     try {
