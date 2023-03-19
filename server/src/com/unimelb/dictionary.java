@@ -47,6 +47,16 @@ public class dictionary {
         }
     }
 
+    public String updateEntry(String word, String definitions) {
+        if (dictionaryData.containsKey(word)){
+            dictionaryData.remove(word);
+            dictionaryData.put(word, definitions);
+            return "success";
+        } else {
+            return "Word doesn't exist";
+        }
+    }
+
     public void initializeDictionary(){
         try {
             CSVReader readIn = new CSVReaderBuilder(new FileReader(dictionaryFile)).withRowValidator(TWO_COLUMN_ROW_VALIDATOR).build();
