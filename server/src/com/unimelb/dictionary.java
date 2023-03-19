@@ -23,7 +23,7 @@ public class dictionary {
 
     public String addNewEntry(String newWord, String definitions){
         if (dictionaryData.containsKey(newWord)){
-            return "Already here";
+            return "fail";
         } else {
             dictionaryData.put(newWord, definitions);
             return "success";
@@ -32,7 +32,7 @@ public class dictionary {
 
     public String removeEntry(String word){
         if (!dictionaryData.containsKey(word)){
-            return "not here";
+            return "fail";
         } else {
             dictionaryData.remove(word);
             return "success";
@@ -53,7 +53,7 @@ public class dictionary {
             dictionaryData.put(word, definitions);
             return "success";
         } else {
-            return "Word doesn't exist";
+            return "fail";
         }
     }
 

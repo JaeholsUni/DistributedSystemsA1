@@ -3,6 +3,7 @@ package com.unimelb;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 
 public class clientRunnable implements Runnable{
 
@@ -27,12 +28,17 @@ public class clientRunnable implements Runnable{
             try {
                 while ((clientMsg = in.readLine()) != null)
                 {
-                    out.write("Server Ack " + clientMsg + "\n");
                     String[] messageArray = interpretor.decodeJSON(clientMsg);
-                    out.flush();
-                    System.out.println("Response Sent");
 
-                    System.out.println(sortTask(dictionary, messageArray));
+                    if (messageArray == null) {
+                        System.out.println("bad input");
+                        continue;
+                    }
+                    String output = interpretor.encodeJSON(sortTask(dictionary, messageArray));
+                    System.out.println(output);
+                    out.write(output + "\n");
+                    out.flush();
+                    System.out.println("response sent");
 
                 }
             } catch (SocketException e)
@@ -48,22 +54,36 @@ public class clientRunnable implements Runnable{
 
     }
 
-    private String sortTask(dictionary dictionary, String[] contents){
+    private ArrayList<String> sortTask(dictionary dictionary, String[] contents){
+        ArrayList<String> returnString = new ArrayList<>();
+
         if (!contentValidator(contents)) {
-            return "Failure";
+            returnString.add("status");
+            returnString.add("fail");
+            return returnString;
         }
 
         switch (contents[0]) {
             case "get":
-                return (dictionary.retrieveEntry(contents[1]));
+                returnString.add("status");
+                returnString.add("success");
+                returnString.add("data");
+                returnString.add(dictionary.retrieveEntry(contents[1]));
+                return returnString;
             case "delete":
-                return dictionary.removeEntry(contents[1]);
+                returnString.add("status");
+                returnString.add(dictionary.removeEntry(contents[1]));
+                return returnString;
             case "add":
-                return dictionary.addNewEntry(contents[1], contents[2]);
+                returnString.add("status");
+                returnString.add(dictionary.addNewEntry(contents[1], contents[2]));
             case "update":
-                return dictionary.updateEntry(contents[1], contents[2]);
+                returnString.add("status");
+                returnString.add(dictionary.updateEntry(contents[1], contents[2]));
             default:
-                return "Failure";
+                returnString.add("status");
+                returnString.add("fail");
+                return returnString;
         }
     }
 
