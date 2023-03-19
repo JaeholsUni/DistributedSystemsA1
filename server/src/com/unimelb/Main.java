@@ -15,9 +15,9 @@ public class Main {
     public static void main(String[] args) {
 	ServerSocket listeningSocket = null;
     Socket clientSocket = null;
+    ThreadPool threadPool = new ThreadPool(10);
     dictionary dictionaryDatabase = new dictionary(args[0]);
     JSONinterpretor interpretor = new JSONinterpretor();
-    worker tempWorker = new worker();
     dictionaryDatabase.initializeDictionary();
 
     try {
@@ -31,35 +31,12 @@ public class Main {
             clientSocket = listeningSocket.accept();
             i++;
 
+            System.out.println("Assigning client number " + i + "To new thread");
+            threadPool.addTask(new clientRunnable(dictionaryDatabase, clientSocket));
+
             System.out.println("Client connection number" + i + "accepted:");
             System.out.println("Remote Hostname: " + clientSocket.getInetAddress().getHostName());
             System.out.println("Local Port " + clientSocket.getLocalPort());
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-
-
-            String clientMsg = null;
-            try {
-                while ((clientMsg = in.readLine()) != null)
-                {
-                    System.out.println("Message from client " + i + ": " + clientMsg);
-                    out.write("Server Ack " + clientMsg + "\n");
-                    String[] messageArray = interpretor.decodeJSON(clientMsg);
-                    out.flush();
-                    System.out.println("Response Sent");
-
-                    System.out.println(tempWorker.sortTask(dictionaryDatabase, messageArray));
-
-                }
-                System.out.println("Sever Closed the Client Connection - Recieved null");
-            }
-            catch (SocketException e)
-            {
-                System.out.println("Closed by exception");
-            }
-
-            clientSocket.close();
         }
     }
     catch (IOException e)
