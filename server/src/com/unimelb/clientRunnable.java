@@ -5,6 +5,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 
+import static com.unimelb.arrayUtils.*;
+
 public class clientRunnable implements Runnable{
 
     private final dictionary dictionary;
@@ -58,32 +60,20 @@ public class clientRunnable implements Runnable{
         ArrayList<String> returnString = new ArrayList<>();
 
         if (!contentValidator(contents)) {
-            returnString.add("status");
-            returnString.add("fail");
-            return returnString;
+            return arrayComposer(tupleMaker(FAILURE_MESSAGE, INVALID_CONTENT_MESSAGE));
         }
 
         switch (contents[0]) {
             case "get":
-                returnString.add("status");
-                returnString.add("success");
-                returnString.add("data");
-                returnString.add(dictionary.retrieveEntry(contents[1]));
-                return returnString;
+                return arrayComposer(dictionary.retrieveEntry(contents[1]));
             case "delete":
-                returnString.add("status");
-                returnString.add(dictionary.removeEntry(contents[1]));
-                return returnString;
+                return arrayComposer(dictionary.removeEntry(contents[1]));
             case "add":
-                returnString.add("status");
-                returnString.add(dictionary.addNewEntry(contents[1], contents[2]));
+                return arrayComposer(dictionary.addNewEntry(contents[1], contents[2]));
             case "update":
-                returnString.add("status");
-                returnString.add(dictionary.updateEntry(contents[1], contents[2]));
+                return arrayComposer(dictionary.updateEntry(contents[1], contents[2]));
             default:
-                returnString.add("status");
-                returnString.add("fail");
-                return returnString;
+                return arrayComposer(tupleMaker(FAILURE_MESSAGE, UNKNOWN_COMMAND_MESSAGE));
         }
     }
 
@@ -93,11 +83,9 @@ public class clientRunnable implements Runnable{
             return false;
         } else {
             if ((contents[0].equals("add") || contents[0].equals("update")) && contents[2] == null) {
-
                 System.out.println("3 null and required");
                 return false;
             }
-
             System.out.println("all g");
             return true;
         }
