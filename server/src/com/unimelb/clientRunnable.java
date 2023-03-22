@@ -30,6 +30,7 @@ public class clientRunnable implements Runnable{
             try {
                 while ((clientMsg = in.readLine()) != null)
                 {
+                    System.out.println(clientMsg);
                     String[] messageArray = interpretor.decodeJSON(clientMsg);
 
                     if (messageArray == null) {

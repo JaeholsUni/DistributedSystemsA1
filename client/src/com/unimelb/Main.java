@@ -15,6 +15,7 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
 
+
         Socket socket = null;
         try {
             socket = new Socket("localhost", 4444);
@@ -25,6 +26,8 @@ public class Main {
 
             Scanner scanner = new Scanner(System.in);
             String inputStr = null;
+
+            GUI gui = new GUI(out, in);
 
             while (!(inputStr = scanner.nextLine()).equalsIgnoreCase("exit")){
                 out.write(inputStr + "\n");
