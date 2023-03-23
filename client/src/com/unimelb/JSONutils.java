@@ -6,15 +6,19 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
-import static com.unimelb.arrayUtils.arrayComposer;
-import static com.unimelb.arrayUtils.tupleMaker;
+import static com.unimelb.arrayUtils.*;
 
 public class JSONutils {
 
     public static final String GET = "get";
+    public static final String DELETE = "delete";
 
     public static String wordLookUp(String word) {
         return encodeJSON(arrayComposer(tupleMaker(GET, word)));
+    }
+
+    public static String wordRemove(String word) {
+        return encodeJSON(arrayComposer(tupleMaker(DELETE, word)));
     }
 
     public static String encodeJSON(ArrayList<String> encodeArray) {

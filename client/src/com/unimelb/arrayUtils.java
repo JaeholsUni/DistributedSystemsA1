@@ -24,4 +24,12 @@ public class arrayUtils {
         tuple[1] = y;
         return tuple;
     }
+
+    public static String[] trupleMaker(String x, String y, String z) {
+        String[] truple = new String[3];
+        truple[0] = x;
+        truple[1] = y;
+        truple[2] = z;
+        return truple;
+    }
 }

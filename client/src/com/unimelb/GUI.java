@@ -9,11 +9,9 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 import static com.unimelb.JSONutils.wordLookUp;
+import static com.unimelb.JSONutils.wordRemove;
 
 public class GUI {
-
-    BufferedWriter out;
-    BufferedReader in;
 
     commUtils communicator;
 
@@ -38,8 +36,6 @@ public class GUI {
     private JPanel removePanel = new JPanel();
     private JPanel updatePanel = new JPanel();
     private JPanel newPanel = new JPanel();
-
-
 
     public GUI(commUtils communicator) {
 
@@ -100,6 +96,7 @@ public class GUI {
         lookupPanel.setBorder(BorderFactory.createEmptyBorder(100, 100, 100, 100));
         lookupPanel.add(lookupLabel);
         lookupPanel.add(lookupTextField);
+        lookupPanel.add(lookupReplyField);
         lookupPanel.add(lookupButton);
         lookupPanel.add(lookupReturnHomeButton);
 
@@ -108,6 +105,7 @@ public class GUI {
         JButton removeReturnHomeButton = new JButton("Home");
         removeReturnHomeButton.addActionListener(e -> returnHomeButton());
         JButton removeButton = new JButton("Remove");
+        removeButton.addActionListener(e -> deleteFunction());
         //Remove Setup
         removePanel.setBorder(BorderFactory.createEmptyBorder(100, 100, 100, 100));
         removePanel.add(removeLabel);
@@ -156,6 +154,11 @@ public class GUI {
     public void lookupFunction() {
         String text = lookupTextField.getText();
         System.out.println(communicator.readWrite(wordLookUp(text)+ "\n"));
+    }
+
+    public void deleteFunction() {
+        String text = removeTextField.getText();
+        System.out.println(communicator.readWrite(wordRemove(text)+ "\n"));
     }
 
     public void changePanels(JPanel toHide, JPanel toShow) {
