@@ -6,8 +6,15 @@ import java.io.IOException;
 
 public class commUtils {
 
+    BufferedReader reader;
+    BufferedWriter writer;
 
-    public static String readWrite(String write, BufferedWriter writer, BufferedReader reader) {
+    public commUtils(BufferedReader reader, BufferedWriter writer) {
+        this.reader = reader;
+        this.writer = writer;
+    }
+
+    public String readWrite(String write) {
         try {
             System.out.println("Attempting to write " + write);
 
