@@ -8,12 +8,9 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-import static com.unimelb.JSONutils.wordLookUp;
+import static com.unimelb.JSONutils.*;
 
 public class GUI {
-
-    BufferedWriter out;
-    BufferedReader in;
 
     commUtils communicator;
 
@@ -38,8 +35,6 @@ public class GUI {
     private JPanel removePanel = new JPanel();
     private JPanel updatePanel = new JPanel();
     private JPanel newPanel = new JPanel();
-
-
 
     public GUI(commUtils communicator) {
 
@@ -100,6 +95,7 @@ public class GUI {
         lookupPanel.setBorder(BorderFactory.createEmptyBorder(100, 100, 100, 100));
         lookupPanel.add(lookupLabel);
         lookupPanel.add(lookupTextField);
+        lookupPanel.add(lookupReplyField);
         lookupPanel.add(lookupButton);
         lookupPanel.add(lookupReturnHomeButton);
 
@@ -108,6 +104,7 @@ public class GUI {
         JButton removeReturnHomeButton = new JButton("Home");
         removeReturnHomeButton.addActionListener(e -> returnHomeButton());
         JButton removeButton = new JButton("Remove");
+        removeButton.addActionListener(e -> deleteFunction());
         //Remove Setup
         removePanel.setBorder(BorderFactory.createEmptyBorder(100, 100, 100, 100));
         removePanel.add(removeLabel);
@@ -118,6 +115,7 @@ public class GUI {
         //Update Panel
         //Update Buttons
         JButton updateButton = new JButton("Update Definition");
+        updateButton.addActionListener(e -> updateFunction());
         JButton updateReturnHomeButton = new JButton("Home");
         updateReturnHomeButton.addActionListener(e -> returnHomeButton());
         //Update Setup
@@ -131,6 +129,7 @@ public class GUI {
         //New Panel
         //New Buttons
         JButton newButton = new JButton("Update Definition");
+        newButton.addActionListener(e -> newFunction());
         JButton newReturnHomeButton = new JButton("Home");
         newReturnHomeButton.addActionListener(e -> returnHomeButton());
         //New Setup
@@ -156,6 +155,23 @@ public class GUI {
     public void lookupFunction() {
         String text = lookupTextField.getText();
         System.out.println(communicator.readWrite(wordLookUp(text)+ "\n"));
+    }
+
+    public void deleteFunction() {
+        String text = removeTextField.getText();
+        System.out.println(communicator.readWrite(wordRemove(text)+ "\n"));
+    }
+
+    public void updateFunction() {
+        String word = updateWordTextField.getText();
+        String def = updateDefTextField.getText();
+        System.out.println(communicator.readWrite(wordUpdate(word, def)+ "\n"));
+    }
+
+    public void newFunction() {
+        String word = newWordTextField.getText();
+        String def = newDefTextField.getText();
+        System.out.println(communicator.readWrite(wordNew(word, def)+ "\n"));
     }
 
     public void changePanels(JPanel toHide, JPanel toShow) {
