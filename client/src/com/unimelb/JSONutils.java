@@ -13,6 +13,7 @@ public class JSONutils {
     public static final String GET = "get";
     public static final String DELETE = "delete";
     private static final String UPDATE = "update";
+    private static final String NEW = "add";
 
     public static String wordLookUp(String word) {
         return encodeJSON(arrayComposer(tupleMaker(GET, word)));
@@ -24,6 +25,10 @@ public class JSONutils {
 
     public static String wordUpdate(String word, String def) {
         return encodeJSON(arrayComposer(trupleMaker(UPDATE, word, def)));
+    }
+
+    public static String wordNew(String word, String def) {
+        return encodeJSON(arrayComposer(trupleMaker(NEW, word, def)));
     }
 
     public static String encodeJSON(ArrayList<String> encodeArray) {

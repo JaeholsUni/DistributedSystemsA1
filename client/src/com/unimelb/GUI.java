@@ -129,6 +129,7 @@ public class GUI {
         //New Panel
         //New Buttons
         JButton newButton = new JButton("Update Definition");
+        newButton.addActionListener(e -> newFunction());
         JButton newReturnHomeButton = new JButton("Home");
         newReturnHomeButton.addActionListener(e -> returnHomeButton());
         //New Setup
@@ -165,6 +166,12 @@ public class GUI {
         String word = updateWordTextField.getText();
         String def = updateDefTextField.getText();
         System.out.println(communicator.readWrite(wordUpdate(word, def)+ "\n"));
+    }
+
+    public void newFunction() {
+        String word = newWordTextField.getText();
+        String def = newDefTextField.getText();
+        System.out.println(communicator.readWrite(wordNew(word, def)+ "\n"));
     }
 
     public void changePanels(JPanel toHide, JPanel toShow) {
