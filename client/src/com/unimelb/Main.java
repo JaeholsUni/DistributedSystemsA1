@@ -15,6 +15,7 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
 
+
         Socket socket = null;
         try {
             socket = new Socket("localhost", 4444);
@@ -24,9 +25,16 @@ public class Main {
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"));
 
             Scanner scanner = new Scanner(System.in);
+
+            commUtils communicator = new commUtils(in, out);
+
             String inputStr = null;
 
+            GUI gui = new GUI(communicator);
+
             while (!(inputStr = scanner.nextLine()).equalsIgnoreCase("exit")){
+
+
                 out.write(inputStr + "\n");
                 out.flush();
                 System.out.println("Message Sent");
