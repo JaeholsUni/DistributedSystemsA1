@@ -8,8 +8,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-import static com.unimelb.JSONutils.wordLookUp;
-import static com.unimelb.JSONutils.wordRemove;
+import static com.unimelb.JSONutils.*;
 
 public class GUI {
 
@@ -116,6 +115,7 @@ public class GUI {
         //Update Panel
         //Update Buttons
         JButton updateButton = new JButton("Update Definition");
+        updateButton.addActionListener(e -> updateFunction());
         JButton updateReturnHomeButton = new JButton("Home");
         updateReturnHomeButton.addActionListener(e -> returnHomeButton());
         //Update Setup
@@ -159,6 +159,12 @@ public class GUI {
     public void deleteFunction() {
         String text = removeTextField.getText();
         System.out.println(communicator.readWrite(wordRemove(text)+ "\n"));
+    }
+
+    public void updateFunction() {
+        String word = updateWordTextField.getText();
+        String def = updateDefTextField.getText();
+        System.out.println(communicator.readWrite(wordUpdate(word, def)+ "\n"));
     }
 
     public void changePanels(JPanel toHide, JPanel toShow) {

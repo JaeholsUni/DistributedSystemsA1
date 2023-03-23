@@ -6,14 +6,20 @@ public class arrayUtils {
 
     public static final String COMMAND = "command";
     public static final String WORD = "word";
+    public static final String DEFINITION = "definition";
 
 
+    //These need to be refactored
     public static ArrayList<String> arrayComposer(String[] inputs) {
         ArrayList<String> returnString = new ArrayList<>();
         returnString.add(COMMAND);
         returnString.add(inputs[0]);
         returnString.add(WORD);
         returnString.add(inputs[1]);
+        if (inputs.length > 2) {
+            returnString.add(DEFINITION);
+            returnString.add(inputs[2]);
+        }
 
         return returnString;
     }
