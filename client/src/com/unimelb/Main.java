@@ -59,6 +59,7 @@ public class Main {
                     e.printStackTrace();
                 }
             }
+            GUIFail guiFail = new GUIFail();
         }
     }
 }

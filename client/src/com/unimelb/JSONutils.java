@@ -2,10 +2,12 @@ package com.unimelb;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
+import static com.unimelb.GUI.showPopUp;
 import static com.unimelb.arrayUtils.*;
 
 public class JSONutils {
@@ -14,6 +16,8 @@ public class JSONutils {
     public static final String DELETE = "delete";
     private static final String UPDATE = "update";
     private static final String NEW = "add";
+    private static final String SUCCESS = "success";
+    private static final String FAILURE = "fail";
 
     public static String wordLookUp(String word) {
         return encodeJSON(arrayComposer(tupleMaker(GET, word)));
@@ -49,5 +53,36 @@ public class JSONutils {
         } catch (IOException e) {
             return null;
         }
+    }
+
+    public static String[] decodeJSON(String json) {
+        JSONParser parser = new JSONParser();
+
+        try {
+            JSONObject obj = (JSONObject) parser.parse(json);
+            String[] returnArray = new String[2];
+
+            returnArray[0] = (String) obj.get("status");
+            returnArray[1] = (String) obj.get("data");
+
+            return returnArray;
+
+        } catch (ParseException e) {
+            System.out.println("JSON exception");
+            return null;
+        }
+    }
+
+    public static String checkValidResponse(String[] response) {
+        if (response[0].equals(SUCCESS)) {
+            return response[1];
+        } else {
+            showPopUp(response[1]);
+            return null;
+        }
+    }
+
+    public static String readResponse(String response) {
+        return checkValidResponse(decodeJSON(response));
     }
 }

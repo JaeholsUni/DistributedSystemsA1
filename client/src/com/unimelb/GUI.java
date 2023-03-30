@@ -23,7 +23,7 @@ public class GUI {
     private JTextField newWordTextField;
     private JTextArea newDefTextArea;
 
-    private JFrame frame = new JFrame();
+    private static JFrame frame = new JFrame();
 
     private JPanel homePanel = new JPanel();
     private JPanel lookupPanel = new JPanel();
@@ -146,27 +146,30 @@ public class GUI {
         frame.setVisible(true);
     }
 
+    private String sendResponseGetReply(String text) {
+        return readResponse(communicator.readWrite(text + "\n"));
+    }
 
     public void lookupFunction() {
         String text = lookupTextField.getText();
-        System.out.println(communicator.readWrite(wordLookUp(text)+ "\n"));
+        lookupReplyArea.setText(sendResponseGetReply(wordLookUp(text)));
     }
 
     public void deleteFunction() {
         String text = removeTextField.getText();
-        System.out.println(communicator.readWrite(wordRemove(text)+ "\n"));
+        showPopUp(sendResponseGetReply(wordRemove(text)));
     }
 
     public void updateFunction() {
         String word = updateWordTextField.getText();
         String def = updateDefTextArea.getText();
-        System.out.println(communicator.readWrite(wordUpdate(word, def)+ "\n"));
+        System.out.println(sendResponseGetReply(wordUpdate(word, def)));
     }
 
     public void newFunction() {
         String word = newWordTextField.getText();
         String def = newDefTextArea.getText();
-        System.out.println(communicator.readWrite(wordNew(word, def)+ "\n"));
+        System.out.println(sendResponseGetReply(wordNew(word, def)));
     }
 
     public void changePanels(JPanel toHide, JPanel toShow) {
@@ -181,5 +184,12 @@ public class GUI {
         frame.add(homePanel);
         frame.getContentPane().revalidate();
         frame.getContentPane().repaint();
+    }
+
+    public static void showPopUp(String text) {
+        if (text == null) {
+            return;
+        }
+        JOptionPane.showMessageDialog(frame, text);
     }
 }
