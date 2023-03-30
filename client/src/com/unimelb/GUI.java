@@ -2,11 +2,6 @@ package com.unimelb;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
 
 import static com.unimelb.JSONutils.*;
 
@@ -21,12 +16,12 @@ public class GUI {
     JLabel newLabel = new JLabel("Add New Word");
 
     private JTextField lookupTextField;
-    private JTextField lookupReplyField;
+    private JTextArea lookupReplyArea;
     private JTextField removeTextField;
     private JTextField updateWordTextField;
-    private JTextField updateDefTextField;
+    private JTextArea updateDefTextArea;
     private JTextField newWordTextField;
-    private JTextField newDefTextField;
+    private JTextArea newDefTextArea;
 
     private JFrame frame = new JFrame();
 
@@ -42,13 +37,13 @@ public class GUI {
 
         //Text Fields
         lookupTextField = new JTextField(20);
-        lookupReplyField = new JTextField(20);
-        lookupReplyField.setEditable(false);
+        lookupReplyArea = new JTextArea(5, 20);
+        lookupReplyArea.setEditable(false);
         removeTextField = new JTextField(20);
         updateWordTextField = new JTextField(20);
-        updateDefTextField = new JTextField(20);
+        updateDefTextArea = new JTextArea(5, 20);
         newWordTextField = new JTextField(20);
-        newDefTextField = new JTextField(20);
+        newDefTextArea = new JTextArea(5,20);
 
         //Return Button
         JButton returnHomeButton = new JButton("Home");
@@ -95,7 +90,7 @@ public class GUI {
         lookupPanel.setBorder(BorderFactory.createEmptyBorder(100, 100, 100, 100));
         lookupPanel.add(lookupLabel);
         lookupPanel.add(lookupTextField);
-        lookupPanel.add(lookupReplyField);
+        lookupPanel.add(lookupReplyArea);
         lookupPanel.add(lookupButton);
         lookupPanel.add(lookupReturnHomeButton);
 
@@ -122,13 +117,13 @@ public class GUI {
         updatePanel.setBorder(BorderFactory.createEmptyBorder(100, 100, 100, 100));
         updatePanel.add(updateLabel);
         updatePanel.add(updateWordTextField);
-        updatePanel.add(updateDefTextField);
+        updatePanel.add(updateDefTextArea);
         updatePanel.add(updateButton);
         updatePanel.add(updateReturnHomeButton);
 
         //New Panel
         //New Buttons
-        JButton newButton = new JButton("Update Definition");
+        JButton newButton = new JButton("Add new word!");
         newButton.addActionListener(e -> newFunction());
         JButton newReturnHomeButton = new JButton("Home");
         newReturnHomeButton.addActionListener(e -> returnHomeButton());
@@ -136,7 +131,7 @@ public class GUI {
         newPanel.setBorder(BorderFactory.createEmptyBorder(100, 100, 100, 100));
         newPanel.add(newLabel);
         newPanel.add(newWordTextField);
-        newPanel.add(newDefTextField);
+        newPanel.add(newDefTextArea);
         newPanel.add(newButton);
         newPanel.add(newReturnHomeButton);
 
@@ -164,13 +159,13 @@ public class GUI {
 
     public void updateFunction() {
         String word = updateWordTextField.getText();
-        String def = updateDefTextField.getText();
+        String def = updateDefTextArea.getText();
         System.out.println(communicator.readWrite(wordUpdate(word, def)+ "\n"));
     }
 
     public void newFunction() {
         String word = newWordTextField.getText();
-        String def = newDefTextField.getText();
+        String def = newDefTextArea.getText();
         System.out.println(communicator.readWrite(wordNew(word, def)+ "\n"));
     }
 
