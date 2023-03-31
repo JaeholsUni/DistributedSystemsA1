@@ -1,3 +1,11 @@
+/*
+Dictionary and supporting functions for storing words in server
+
+Distributed Systems Assignment 1
+James Hollingsworth - 915178
+jameswh@iinet.net.au
+ */
+
 package com.unimelb;
 
 import java.io.FileNotFoundException;
@@ -21,6 +29,9 @@ public class dictionary {
     private static final String WORD_NOT_FOUND = "Word not found in dictionary";
     private static final String WORD_REMOVED_CORRECTLY = "Word as been removed from dictionary";
     private static final String WORD_UPDATED_CORRECTLY = "Word has been updated correctly";
+
+    private static final String BAD_DICTIONARY_INPUT_MESSAGE = "Dictionary not formatted correctly, ensure that the file is a csv with a word followed by a definition on each line. Also ensure that the file path is correct";
+    private static final String TWO_ROW_FAILURE_MESSAGE = "Row must have two columns";
 
     private Map<String, String> dictionaryData;
     private String dictionaryFile;
@@ -76,27 +87,27 @@ public class dictionary {
                     dictionaryData.put(nextLine[0], nextLine[1]);
                 }
             } catch (IOException e) {
-                throwDictionaryPopup();
                 e.printStackTrace();
+                throwDictionaryPopup();
             } catch (CsvValidationException e) {
-                throwDictionaryPopup();
                 e.printStackTrace();
+                throwDictionaryPopup();
             }
         } catch (FileNotFoundException e){
-            throwDictionaryPopup();
             e.printStackTrace();
+            throwDictionaryPopup();
         } catch (Exception e) {
-            throwDictionaryPopup();
             e.printStackTrace();
+            throwDictionaryPopup();
         }
     }
 
     private void throwDictionaryPopup() {
-        showPopUp("Dictionary not formatted correctly, ensure that the file is a csv with a word followed by a definition on each line. Also ensure that the file path is correct");
+        showPopUp(BAD_DICTIONARY_INPUT_MESSAGE);
         System.exit(0);
     }
 
     public static final Function<String[], Boolean> TWO_COLUMN_ROW = (x) -> x.length ==2;
-    private static final RowValidator TWO_COLUMN_ROW_VALIDATOR = new RowFunctionValidator(TWO_COLUMN_ROW, "Row must have two columns");
+    private static final RowValidator TWO_COLUMN_ROW_VALIDATOR = new RowFunctionValidator(TWO_COLUMN_ROW, TWO_ROW_FAILURE_MESSAGE);
 
 }

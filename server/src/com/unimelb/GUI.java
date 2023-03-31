@@ -1,3 +1,11 @@
+/*
+Server management GUI
+
+Distributed Systems Assignment 1
+James Hollingsworth - 915178
+jameswh@iinet.net.au
+ */
+
 package com.unimelb;
 
 import javax.swing.*;

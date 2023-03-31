@@ -1,8 +1,18 @@
+/*
+Main class for the dictionary server
+
+Distributed Systems Assignment 1
+James Hollingsworth - 915178
+jameswh@iinet.net.au
+ */
+
 package com.unimelb;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import static com.unimelb.GUI.addToReadOut;
 
 
 public class Main {
@@ -45,17 +55,15 @@ public class Main {
 
         while (true)
         {
-            System.out.println("Server listening on port " + PORT_NUM);
-
+            addToReadOut("Info: Server listening on port " + PORT_NUM);
 
             clientSocket = listeningSocket.accept();
 
             if (activeConnections < THREAD_NUMBER) {
                 increaseActiveConnections();
                 threadPool.addTask(new clientRunnable(dictionaryDatabase, clientSocket));
-                System.out.println("Client connection number " + activeConnections + " accepted:");
-                System.out.println("Remote Hostname: " + clientSocket.getInetAddress().getHostName());
-                System.out.println("Local Port " + clientSocket.getLocalPort());
+
+                addToReadOut("Info: Client connection number " + activeConnections + " accepted:");
             } else {
                 rejectConnection(clientSocket);
             }
@@ -77,7 +85,7 @@ public class Main {
     }
     }
 
-    public static void increaseActiveConnections() {
+    private static void increaseActiveConnections() {
         activeConnections++;
     }
 
@@ -87,7 +95,7 @@ public class Main {
 
     private static void rejectConnection(Socket connectionSocket) {
         try {
-            System.out.println("Rejecting Connection");
+            addToReadOut("Info: Rejecting Connection");
             connectionSocket.close();
         } catch (IOException e) {
             e.printStackTrace();

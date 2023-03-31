@@ -1,14 +1,20 @@
+/*
+Threadpool for connection threads
+
+Distributed Systems Assignment 1
+James Hollingsworth - 915178
+jameswh@iinet.net.au
+ */
+
 package com.unimelb;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ThreadPool {
-    private final int threadNumber;
     private final ThreadWorker[] threads;
     private final LinkedBlockingQueue<Runnable> queue;
 
     public ThreadPool(int threadNumber) {
-        this.threadNumber = threadNumber;
         queue =  new LinkedBlockingQueue<>();
         threads = new ThreadWorker[threadNumber];
 
@@ -20,9 +26,5 @@ public class ThreadPool {
 
     public void addTask(Runnable task) {
             queue.add(task);
-    }
-
-    public int getEnquedItems() {
-        return queue.size();
     }
 }

@@ -1,3 +1,11 @@
+/*
+Utility functions for encoding and decoding JSON for the server
+
+Distributed Systems Assignment 1
+James Hollingsworth - 915178
+jameswh@iinet.net.au
+ */
+
 package com.unimelb;
 
 import org.json.simple.JSONObject;
@@ -8,7 +16,15 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
+import static com.unimelb.GUI.showPopUp;
+
 public class JSONinterpretor {
+
+    private static final String COMMAND = "command";
+    private static final String WORD = "word";
+    private static final String DEFINITION = "definition";
+
+    private static final String JSON_EXCEPTION_MESSAGE = "JSON Parse Exception Occurred, should not happen";
 
     public String[] decodeJSON(String json) {
         JSONParser parser = new JSONParser();
@@ -18,14 +34,14 @@ public class JSONinterpretor {
 
             String[] returnArray = new String[3];
 
-            returnArray[0] = (String) obj.get("command");
-            returnArray[1] = (String) obj.get("word");
-            returnArray[2] = (String) obj.get("definition");
+            returnArray[0] = (String) obj.get(COMMAND);
+            returnArray[1] = (String) obj.get(WORD);
+            returnArray[2] = (String) obj.get(DEFINITION);
 
            return returnArray;
 
         } catch (ParseException e) {
-            System.out.println("Oh no JSON exception!");
+            showPopUp(JSON_EXCEPTION_MESSAGE);
             return null;
         }
     }
@@ -34,7 +50,7 @@ public class JSONinterpretor {
         JSONObject obj = new JSONObject();
 
         if ((encodeArray.size() % 2) != 0) {
-            return "bad bad bad";
+            return null;
         } else {
             for (int i = 0; i < encodeArray.size(); i=i+2) {
                 obj.put(encodeArray.get(i), encodeArray.get(i+1));

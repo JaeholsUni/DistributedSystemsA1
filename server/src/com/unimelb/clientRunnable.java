@@ -1,3 +1,11 @@
+/*
+Runnable that maintains a client connection
+
+Distributed Systems Assignment 1
+James Hollingsworth - 915178
+jameswh@iinet.net.au
+ */
+
 package com.unimelb;
 
 import java.io.*;
@@ -13,7 +21,7 @@ public class clientRunnable implements Runnable{
 
     private final dictionary dictionary;
     private final Socket connectionSocket;
-    private final JSONinterpretor interpretor = new JSONinterpretor();
+    private final JSONinterpretor interpreter = new JSONinterpretor();
 
     public clientRunnable(com.unimelb.dictionary dictionary, Socket connectionSocket) {
         this.dictionary = dictionary;
@@ -21,8 +29,6 @@ public class clientRunnable implements Runnable{
     }
 
     public void run() {
-
-
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(connectionSocket.getOutputStream()));
@@ -39,13 +45,13 @@ public class clientRunnable implements Runnable{
                         continue;
                     }
 
-                    String[] messageArray = interpretor.decodeJSON(clientMsg);
+                    String[] messageArray = interpreter.decodeJSON(clientMsg);
 
                     if (messageArray == null) {
                         addToReadOut("Info: Bad Input From Client");
                         continue;
                     }
-                    String output = interpretor.encodeJSON(sortTask(dictionary, messageArray));
+                    String output = interpreter.encodeJSON(sortTask(dictionary, messageArray));
                     System.out.println(output);
                     writeToConnection(output, out);
 
@@ -101,8 +107,7 @@ public class clientRunnable implements Runnable{
             out.flush();
             addToReadOut("Sent: " + text + "\n");
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
-
     }
 }

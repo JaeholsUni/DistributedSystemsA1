@@ -19,7 +19,7 @@ public class commUtils {
     BufferedReader reader;
     BufferedWriter writer;
 
-    private final String LOST_CON_MESSAGE = "Connection with server lost please restart application";
+    private final String LOST_CON_MESSAGE = "Connection with server lost exiting application";
 
     public commUtils(BufferedReader reader, BufferedWriter writer) {
         this.reader = reader;
@@ -33,6 +33,7 @@ public class commUtils {
             return reader.readLine();
         } catch (IOException e){
             showPopUp(LOST_CON_MESSAGE);
+            System.exit(0);
             e.printStackTrace();
         }
         return null;
