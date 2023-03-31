@@ -24,6 +24,11 @@ public class Main {
     private static int activeConnections = 0;
 
     public static void main(String[] args) {
+        if (!validateArgs(args)) {
+            GUIfailedArgs guIfailedArgs = new GUIfailedArgs();
+            return;
+        }
+
         dictionary dictionaryDatabase = new dictionary(args[0]);
         THREAD_NUMBER = Integer.parseInt(args[1]);
         PORT_NUM = Integer.parseInt(args[2]);
@@ -87,6 +92,18 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    private static boolean validateArgs(String[] args) {
+        if (args.length != 3) {
+            return false;
+        }
+        try {
+            Integer.parseInt(args[1]);
+            Integer.parseInt(args[2]);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
 }

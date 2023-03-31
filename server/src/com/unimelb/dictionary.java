@@ -12,6 +12,7 @@ import com.opencsv.exceptions.CsvValidationException;
 import com.opencsv.validators.RowFunctionValidator;
 import com.opencsv.validators.RowValidator;
 
+import static com.unimelb.GUI.showPopUp;
 import static com.unimelb.arrayUtils.*;
 
 public class dictionary {
@@ -75,19 +76,24 @@ public class dictionary {
                     dictionaryData.put(nextLine[0], nextLine[1]);
                 }
             } catch (IOException e) {
-                System.out.println("IOEXCEPTION");
+                throwDictionaryPopup();
                 e.printStackTrace();
             } catch (CsvValidationException e) {
-                System.out.println("CSV Validation Exception");
+                throwDictionaryPopup();
                 e.printStackTrace();
             }
         } catch (FileNotFoundException e){
-            System.out.println("File Not Found Exception");
+            throwDictionaryPopup();
             e.printStackTrace();
         } catch (Exception e) {
-            System.out.println("other exception");
+            throwDictionaryPopup();
             e.printStackTrace();
         }
+    }
+
+    private void throwDictionaryPopup() {
+        showPopUp("Dictionary not formatted correctly, ensure that the file is a csv with a word followed by a definition on each line. Also ensure that the file path is correct");
+        System.exit(0);
     }
 
     public static final Function<String[], Boolean> TWO_COLUMN_ROW = (x) -> x.length ==2;

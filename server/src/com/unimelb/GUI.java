@@ -9,7 +9,7 @@ import static com.unimelb.Main.*;
 
 public class GUI {
 
-    private JFrame frame = new JFrame();
+    private static JFrame frame = new JFrame();
     private JLabel portLabel, maxConnLabel, activeConnLabel;
     private static JTextArea readOut;
 
@@ -31,6 +31,7 @@ public class GUI {
         frame.add(scrollPane);
 
         frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
         Timer timer = new Timer();
@@ -44,5 +45,13 @@ public class GUI {
     public static void addToReadOut(String text) {
         readOut.append(text + "\n");
     }
+
+    public static void showPopUp(String text) {
+        if (text == null) {
+            return;
+        }
+        JOptionPane.showMessageDialog(frame, text);
+    }
+
 
 }
