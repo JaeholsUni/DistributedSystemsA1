@@ -32,6 +32,10 @@ public class Main {
 
             GUI gui = new GUI(communicator);
 
+            out.write("testConnection\n");
+            out.flush();
+            System.out.println(in.readLine());
+
             while (!(inputStr = scanner.nextLine()).equalsIgnoreCase("exit")){
 
 

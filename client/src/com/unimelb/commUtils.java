@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import static com.unimelb.GUI.showPopUp;
+
 public class commUtils {
 
     BufferedReader reader;
@@ -23,6 +25,7 @@ public class commUtils {
 
             return reader.readLine();
         } catch (IOException e){
+            showPopUp("Connection with server lost please restart application");
             e.printStackTrace();
         }
 
