@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 
+import static com.unimelb.GUI.addToReadOut;
 import static com.unimelb.Main.decreaseActiveConnections;
 import static com.unimelb.arrayUtils.*;
 
@@ -29,35 +30,32 @@ public class clientRunnable implements Runnable{
             String clientMsg = null;
 
             try {
-                while ((clientMsg = in.readLine()) != null)
+                while (true)
                 {
-                    System.out.println(clientMsg);
+                    clientMsg = in.readLine();
+                    addToReadOut("Received: " + clientMsg + "\n");
                     if (clientMsg.equals("testConnection")) {
-                        out.write("Connection confirmed" + "\n");
-                        out.flush();
+                        writeToConnection("Connection confirmed", out);
                         continue;
                     }
 
                     String[] messageArray = interpretor.decodeJSON(clientMsg);
 
                     if (messageArray == null) {
-                        System.out.println("bad input");
+                        addToReadOut("Info: Bad Input From Client");
                         continue;
                     }
                     String output = interpretor.encodeJSON(sortTask(dictionary, messageArray));
                     System.out.println(output);
-                    out.write(output + "\n");
-                    out.flush();
-                    System.out.println("response sent");
+                    writeToConnection(output, out);
 
                 }
             } catch (SocketException e)
             {
-                System.out.println("Closed by exception");
+                addToReadOut("Info: Client Connection Closed");
             }
 
             decreaseActiveConnections();
-            System.out.println("decreased active connections");
             connectionSocket.close();
 
         } catch (IOException e) {
@@ -88,15 +86,23 @@ public class clientRunnable implements Runnable{
 
     private boolean contentValidator(String[] contents) {
         if (contents[0] == null || contents[1] == null){
-            System.out.println("1 or 2 null");
             return false;
         } else {
             if ((contents[0].equals("add") || contents[0].equals("update")) && contents[2] == null) {
-                System.out.println("3 null and required");
                 return false;
             }
-            System.out.println("all g");
             return true;
         }
+    }
+
+    private void writeToConnection(String text, BufferedWriter out) {
+        try {
+            out.write(text + "\n");
+            out.flush();
+            addToReadOut("Sent: " + text + "\n");
+        } catch (IOException e) {
+
+        }
+
     }
 }
