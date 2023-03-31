@@ -7,7 +7,19 @@ import java.net.Socket;
 
 public class Main {
 
-    public static Integer THREAD_NUMBER;
+    public static Integer getThreadNumber() {
+        return THREAD_NUMBER;
+    }
+
+    public static Integer getPortNum() {
+        return PORT_NUM;
+    }
+
+    public static int getActiveConnections() {
+        return activeConnections;
+    }
+
+    private static Integer THREAD_NUMBER;
     private static Integer PORT_NUM;
     private static int activeConnections = 0;
 
@@ -20,6 +32,8 @@ public class Main {
         Socket clientSocket = null;
         ThreadPool threadPool = new ThreadPool(THREAD_NUMBER);
         dictionaryDatabase.initializeDictionary();
+
+        GUI gui = new GUI();
 
     try {
         listeningSocket = new ServerSocket(PORT_NUM);

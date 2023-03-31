@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 
+import static com.unimelb.GUI.addToReadOut;
 import static com.unimelb.Main.decreaseActiveConnections;
 import static com.unimelb.arrayUtils.*;
 
@@ -33,8 +34,7 @@ public class clientRunnable implements Runnable{
                 {
                     System.out.println(clientMsg);
                     if (clientMsg.equals("testConnection")) {
-                        out.write("Connection confirmed" + "\n");
-                        out.flush();
+                        writeToConnection("Connection confirmed", out);
                         continue;
                     }
 
@@ -46,9 +46,7 @@ public class clientRunnable implements Runnable{
                     }
                     String output = interpretor.encodeJSON(sortTask(dictionary, messageArray));
                     System.out.println(output);
-                    out.write(output + "\n");
-                    out.flush();
-                    System.out.println("response sent");
+                    writeToConnection(output, out);
 
                 }
             } catch (SocketException e)
@@ -98,5 +96,16 @@ public class clientRunnable implements Runnable{
             System.out.println("all g");
             return true;
         }
+    }
+
+    private void writeToConnection(String text, BufferedWriter out) {
+        try {
+            out.write(text + "\n");
+            out.flush();
+            addToReadOut("Sent: " + text + "\n");
+        } catch (IOException e) {
+
+        }
+
     }
 }
