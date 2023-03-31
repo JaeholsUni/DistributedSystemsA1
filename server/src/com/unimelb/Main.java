@@ -7,22 +7,26 @@ import java.net.Socket;
 
 public class Main {
 
-    public static final Integer THREAD_NUMBER = 2;
+    public static Integer THREAD_NUMBER;
+    private static Integer PORT_NUM;
     private static int activeConnections = 0;
 
     public static void main(String[] args) {
-	ServerSocket listeningSocket = null;
-    Socket clientSocket = null;
-    ThreadPool threadPool = new ThreadPool(THREAD_NUMBER);
-    dictionary dictionaryDatabase = new dictionary(args[0]);
-    dictionaryDatabase.initializeDictionary();
+        dictionary dictionaryDatabase = new dictionary(args[0]);
+        THREAD_NUMBER = Integer.parseInt(args[1]);
+        PORT_NUM = Integer.parseInt(args[2]);
+
+	    ServerSocket listeningSocket = null;
+        Socket clientSocket = null;
+        ThreadPool threadPool = new ThreadPool(THREAD_NUMBER);
+        dictionaryDatabase.initializeDictionary();
 
     try {
-        listeningSocket = new ServerSocket(4444);
+        listeningSocket = new ServerSocket(PORT_NUM);
 
         while (true)
         {
-            System.out.println("Server listening on port 4444");
+            System.out.println("Server listening on port " + PORT_NUM);
 
 
             clientSocket = listeningSocket.accept();

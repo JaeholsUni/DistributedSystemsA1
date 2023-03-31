@@ -1,3 +1,11 @@
+/*
+Main GUI for the Client to handle inputs and display with the client
+
+Distributed Systems Assignment 1
+James Hollingsworth - 915178
+jameswh@iinet.net.au
+ */
+
 package com.unimelb;
 
 import javax.swing.*;
@@ -150,36 +158,36 @@ public class GUI {
         return readResponse(communicator.readWrite(text + "\n"));
     }
 
-    public void lookupFunction() {
+    private void lookupFunction() {
         String text = lookupTextField.getText();
         lookupReplyArea.setText(sendResponseGetReply(wordLookUp(text)));
     }
 
-    public void deleteFunction() {
+    private void deleteFunction() {
         String text = removeTextField.getText();
         showPopUp(sendResponseGetReply(wordRemove(text)));
     }
 
-    public void updateFunction() {
+    private void updateFunction() {
         String word = updateWordTextField.getText();
         String def = updateDefTextArea.getText();
-        System.out.println(sendResponseGetReply(wordUpdate(word, def)));
+        showPopUp(sendResponseGetReply(wordUpdate(word, def)));
     }
 
-    public void newFunction() {
+    private void newFunction() {
         String word = newWordTextField.getText();
         String def = newDefTextArea.getText();
-        System.out.println(sendResponseGetReply(wordNew(word, def)));
+        showPopUp(sendResponseGetReply(wordNew(word, def)));
     }
 
-    public void changePanels(JPanel toHide, JPanel toShow) {
+    private void changePanels(JPanel toHide, JPanel toShow) {
         frame.getContentPane().remove(toHide);
         frame.getContentPane().add(toShow);
         frame.getContentPane().revalidate();
         frame.getContentPane().repaint();
     }
 
-    public void returnHomeButton() {
+    private void returnHomeButton() {
         frame.getContentPane().removeAll();
         frame.add(homePanel);
         frame.getContentPane().revalidate();

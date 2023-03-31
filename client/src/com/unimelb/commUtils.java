@@ -1,3 +1,11 @@
+/*
+Utility functions for dealing with communication between the servers
+
+Distributed Systems Assignment 1
+James Hollingsworth - 915178
+jameswh@iinet.net.au
+ */
+
 package com.unimelb;
 
 import java.io.BufferedReader;
@@ -11,6 +19,8 @@ public class commUtils {
     BufferedReader reader;
     BufferedWriter writer;
 
+    private final String LOST_CON_MESSAGE = "Connection with server lost please restart application";
+
     public commUtils(BufferedReader reader, BufferedWriter writer) {
         this.reader = reader;
         this.writer = writer;
@@ -18,17 +28,13 @@ public class commUtils {
 
     public String readWrite(String write) {
         try {
-            System.out.println("Attempting to write " + write);
-
             writer.write(write);
             writer.flush();
-
             return reader.readLine();
         } catch (IOException e){
-            showPopUp("Connection with server lost please restart application");
+            showPopUp(LOST_CON_MESSAGE);
             e.printStackTrace();
         }
-
         return null;
     }
 }

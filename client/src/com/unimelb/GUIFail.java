@@ -1,10 +1,18 @@
+/*
+GUI for failing to connect to the server
+
+Distributed Systems Assignment 1
+James Hollingsworth - 915178
+jameswh@iinet.net.au
+ */
+
 package com.unimelb;
 import javax.swing.*;
 
 public class GUIFail {
 
-    public static final String FAILURE_TITLE = "Failed to connect";
-    public static final String FAILURE_MESSAGE = "Failed to connect to server, server may be full please try again later";
+    private static final String FAILURE_TITLE = "Failed to connect";
+    private static final String FAILURE_MESSAGE = "Failed to connect to server, server may be full please try again later";
 
     public GUIFail() {
         JFrame frame = new JFrame(FAILURE_TITLE);
