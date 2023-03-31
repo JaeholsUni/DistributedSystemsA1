@@ -1,3 +1,11 @@
+/*
+Utility functions to deal with arrays in the application context
+
+Distributed Systems Assignment 1
+James Hollingsworth - 915178
+jameswh@iinet.net.au
+ */
+
 package com.unimelb;
 
 import java.util.ArrayList;
@@ -9,7 +17,6 @@ public class arrayUtils {
     public static final String DEFINITION = "definition";
 
 
-    //These need to be refactored
     public static ArrayList<String> arrayComposer(String[] inputs) {
         ArrayList<String> returnString = new ArrayList<>();
         returnString.add(COMMAND);

@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 
+import static com.unimelb.Main.decreaseActiveConnections;
 import static com.unimelb.arrayUtils.*;
 
 public class clientRunnable implements Runnable{
@@ -31,6 +32,12 @@ public class clientRunnable implements Runnable{
                 while ((clientMsg = in.readLine()) != null)
                 {
                     System.out.println(clientMsg);
+                    if (clientMsg.equals("testConnection")) {
+                        out.write("Connection confirmed" + "\n");
+                        out.flush();
+                        continue;
+                    }
+
                     String[] messageArray = interpretor.decodeJSON(clientMsg);
 
                     if (messageArray == null) {
@@ -49,6 +56,8 @@ public class clientRunnable implements Runnable{
                 System.out.println("Closed by exception");
             }
 
+            decreaseActiveConnections();
+            System.out.println("decreased active connections");
             connectionSocket.close();
 
         } catch (IOException e) {

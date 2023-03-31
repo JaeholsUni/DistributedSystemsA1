@@ -1,3 +1,11 @@
+/*
+Main class for client
+
+Distributed Systems Assignment 1
+James Hollingsworth - 915178
+jameswh@iinet.net.au
+ */
+
 package com.unimelb;
 
 import java.io.BufferedReader;
@@ -13,8 +21,6 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
-
 
         Socket socket = null;
         try {
@@ -24,26 +30,18 @@ public class Main {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"));
 
-            Scanner scanner = new Scanner(System.in);
-
             commUtils communicator = new commUtils(in, out);
-
-            String inputStr = null;
 
             GUI gui = new GUI(communicator);
 
-            while (!(inputStr = scanner.nextLine()).equalsIgnoreCase("exit")){
+            out.write("testConnection\n");
+            out.flush();
+            System.out.println(in.readLine());
 
-
-                out.write(inputStr + "\n");
-                out.flush();
-                System.out.println("Message Sent");
-
-                String recieved = in.readLine();
-                System.out.println("Message recieved " + recieved);
+            while (true){
+                // All communication is handled in GUI
             }
 
-            scanner.close();
         }
         catch (UnknownHostException e){
             e.printStackTrace();
@@ -59,6 +57,7 @@ public class Main {
                     e.printStackTrace();
                 }
             }
+            GUIFail guiFail = new GUIFail();
         }
     }
 }

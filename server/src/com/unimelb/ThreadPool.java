@@ -19,8 +19,10 @@ public class ThreadPool {
     }
 
     public void addTask(Runnable task) {
-
             queue.add(task);
+    }
 
+    public int getEnquedItems() {
+        return queue.size();
     }
 }

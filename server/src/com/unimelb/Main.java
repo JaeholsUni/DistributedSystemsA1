@@ -7,32 +7,39 @@ import java.net.Socket;
 
 public class Main {
 
-    public static final Integer THREAD_NUMBER = 10;
+    public static Integer THREAD_NUMBER;
+    private static Integer PORT_NUM;
+    private static int activeConnections = 0;
 
     public static void main(String[] args) {
-	ServerSocket listeningSocket = null;
-    Socket clientSocket = null;
-    ThreadPool threadPool = new ThreadPool(THREAD_NUMBER);
-    dictionary dictionaryDatabase = new dictionary(args[0]);
-    dictionaryDatabase.initializeDictionary();
+        dictionary dictionaryDatabase = new dictionary(args[0]);
+        THREAD_NUMBER = Integer.parseInt(args[1]);
+        PORT_NUM = Integer.parseInt(args[2]);
+
+	    ServerSocket listeningSocket = null;
+        Socket clientSocket = null;
+        ThreadPool threadPool = new ThreadPool(THREAD_NUMBER);
+        dictionaryDatabase.initializeDictionary();
 
     try {
-        listeningSocket = new ServerSocket(4444);
-        int i = 0; //Count the number of clients
+        listeningSocket = new ServerSocket(PORT_NUM);
 
         while (true)
         {
-            System.out.println("Server listening on port 4444");
+            System.out.println("Server listening on port " + PORT_NUM);
+
 
             clientSocket = listeningSocket.accept();
-            i++;
 
-            System.out.println("Assigning client number " + i + "To new thread");
-            threadPool.addTask(new clientRunnable(dictionaryDatabase, clientSocket));
-
-            System.out.println("Client connection number" + i + "accepted:");
-            System.out.println("Remote Hostname: " + clientSocket.getInetAddress().getHostName());
-            System.out.println("Local Port " + clientSocket.getLocalPort());
+            if (activeConnections < THREAD_NUMBER) {
+                increaseActiveConnections();
+                threadPool.addTask(new clientRunnable(dictionaryDatabase, clientSocket));
+                System.out.println("Client connection number " + activeConnections + " accepted:");
+                System.out.println("Remote Hostname: " + clientSocket.getInetAddress().getHostName());
+                System.out.println("Local Port " + clientSocket.getLocalPort());
+            } else {
+                rejectConnection(clientSocket);
+            }
         }
     }
     catch (IOException e)
@@ -49,5 +56,23 @@ public class Main {
             }
         }
     }
+    }
+
+    public static void increaseActiveConnections() {
+        activeConnections++;
+    }
+
+    public static void decreaseActiveConnections() {
+        activeConnections--;
+    }
+
+    private static void rejectConnection(Socket connectionSocket) {
+        try {
+            System.out.println("Rejecting Connection");
+            connectionSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
