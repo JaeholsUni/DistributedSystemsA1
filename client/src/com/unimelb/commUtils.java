@@ -16,8 +16,8 @@ import static com.unimelb.GUI.showPopUp;
 
 public class commUtils {
 
-    BufferedReader reader;
-    BufferedWriter writer;
+    private BufferedReader reader;
+    private BufferedWriter writer;
 
     private final String LOST_CON_MESSAGE = "Connection with server lost exiting application";
 

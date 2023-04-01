@@ -38,14 +38,14 @@ public class dictionary {
 
     public dictionary(String dictionaryFile) {
         this.dictionaryFile = dictionaryFile;
-        this.dictionaryData = new ConcurrentHashMap<>(); //future proofing
+        this.dictionaryData = new ConcurrentHashMap<>();
     }
 
     public String[] addNewEntry(String newWord, String definitions){
         if (dictionaryData.containsKey(newWord)){
             return tupleMaker(FAILURE_MESSAGE, WORD_ALREADY_PRESENT);
         } else {
-            dictionaryData.put(newWord, definitions);
+            dictionaryData.putIfAbsent(newWord, definitions);
             return tupleMaker(SUCCESS_MESSAGE, WORD_ADDED_CORRECTLY);
         }
     }
@@ -69,8 +69,7 @@ public class dictionary {
 
     public String[] updateEntry(String word, String definitions) {
         if (dictionaryData.containsKey(word)){
-            dictionaryData.remove(word);
-            dictionaryData.put(word, definitions);
+            dictionaryData.replace(word, definitions);
             return tupleMaker(SUCCESS_MESSAGE, WORD_UPDATED_CORRECTLY);
         } else {
             return tupleMaker(FAILURE_MESSAGE, WORD_NOT_FOUND);
@@ -84,7 +83,7 @@ public class dictionary {
                 String [] nextLine;
                 while((nextLine = readIn.readNext()) != null) {
                     System.out.println("New Dictionary line: " + nextLine[0] + " " + nextLine[1]);
-                    dictionaryData.put(nextLine[0], nextLine[1]);
+                    dictionaryData.putIfAbsent(nextLine[0], nextLine[1]);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

@@ -33,7 +33,7 @@ public class clientRunnable implements Runnable{
             BufferedReader in = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(connectionSocket.getOutputStream()));
 
-            String clientMsg = null;
+            String clientMsg;
 
             try {
                 while (true)
@@ -52,7 +52,6 @@ public class clientRunnable implements Runnable{
                         continue;
                     }
                     String output = interpreter.encodeJSON(sortTask(dictionary, messageArray));
-                    System.out.println(output);
                     writeToConnection(output, out);
 
                 }

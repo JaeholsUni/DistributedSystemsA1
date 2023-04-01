@@ -12,11 +12,11 @@ import javax.swing.*;
 public class GUIFail {
 
     private static final String FAILURE_TITLE = "Failed to connect";
-    private static final String FAILURE_MESSAGE = "Failed to connect to server, server may be full please try again later";
+    private static final String FAILURE_MESSAGE = "Failed to connect to server, ensure your port number is correct, server may be full please try again later";
 
     public GUIFail() {
         JFrame frame = new JFrame(FAILURE_TITLE);
-        frame.setSize(500, 100);
+        frame.setSize(700, 100);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 

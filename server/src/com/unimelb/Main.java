@@ -85,7 +85,7 @@ public class Main {
     }
     }
 
-    private static void increaseActiveConnections() {
+    public static void increaseActiveConnections() {
         activeConnections++;
     }
 

@@ -15,13 +15,13 @@ import static com.unimelb.JSONutils.*;
 
 public class GUI {
 
-    commUtils communicator;
+    private commUtils communicator;
 
-    JLabel homeLabel = new JLabel("Hollingsworth Dictionary");
-    JLabel lookupLabel = new JLabel("Search Dictionary");
-    JLabel removeLabel = new JLabel("Remove Word");
-    JLabel updateLabel = new JLabel("Update Definition");
-    JLabel newLabel = new JLabel("Add New Word");
+    private JLabel homeLabel = new JLabel("Hollingsworth Dictionary");
+    private JLabel lookupLabel = new JLabel("Search Dictionary");
+    private JLabel removeLabel = new JLabel("Remove Word");
+    private JLabel updateLabel = new JLabel("Update Definition");
+    private JLabel newLabel = new JLabel("Add New Word");
 
     private JTextField lookupTextField;
     private JTextArea lookupReplyArea;

@@ -15,7 +15,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Scanner;
 
 
 public class Main {
@@ -24,7 +23,7 @@ public class Main {
 
         Socket socket = null;
         try {
-            socket = new Socket("localhost", 4444);
+            socket = new Socket("localhost", Integer.parseInt(args[0]));
             System.out.println("Connection established");
 
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
@@ -47,6 +46,9 @@ public class Main {
             e.printStackTrace();
         }
         catch (IOException e){
+            e.printStackTrace();
+        }
+        catch (NumberFormatException e) {
             e.printStackTrace();
         }
         finally {
