@@ -23,7 +23,7 @@ public class Main {
 
         Socket socket = null;
         try {
-            socket = new Socket("localhost", Integer.parseInt(args[0]));
+            socket = new Socket(args[0], Integer.parseInt(args[1]));
             System.out.println("Connection established");
 
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));

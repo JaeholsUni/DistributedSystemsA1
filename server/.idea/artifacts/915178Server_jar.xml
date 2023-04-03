@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="915178Server:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/915178Server_jar</output-path>
+    <root id="archive" name="untitled104.jar">
+      <element id="module-output" name="untitled104" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libraries/opencsv-5.7.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libraries/json-simple-1.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libraries/commons-lang3-3.12.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
